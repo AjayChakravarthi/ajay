@@ -4,295 +4,616 @@
   <meta charset="UTF-8" />
   <title>Katamreddi Ajay Chakravarthi | Java Backend Developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
+    /* ---------- Variables & Reset ---------- */
     :root {
-      --primary: #2563eb;
-      --light-bg: #f8fafc;
-      --dark-bg: #0f172a;
-      --light-card: #ffffff;
-      --dark-card: #1e293b;
-      --text-light: #e5e7eb;
-      --text-dark: #111827;
-      --gray: #64748b;
+      /* Color Palette */
+      --primary: #3b82f6;      /* Modern Bright Blue */
+      --primary-dark: #2563eb;
+      --accent: #6366f1;       /* Indigo for gradients */
+      
+      /* Light Theme Colors */
+      --bg-color: #f0f4f8;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(255, 255, 255, 0.6);
+      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+      
+      /* Animation Settings */
+      --trans-speed: 0.3s;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body.dark {
+      /* Dark Theme Colors */
+      --bg-color: #0f172a;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: var(--light-bg);
-      color: var(--text-dark);
-      line-height: 1.6;
-      transition: background 0.3s, color 0.3s;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.7;
+      transition: background var(--trans-speed) var(--ease), color var(--trans-speed) var(--ease);
+      overflow-x: hidden;
+      /* Subtle background mesh gradient */
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 20%);
+      background-attachment: fixed;
     }
 
-    body.dark {
-      background: var(--dark-bg);
-      color: var(--text-light);
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--text-muted); border-radius: 4px; opacity: 0.5; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+    a { text-decoration: none; color: inherit; transition: color 0.2s; }
+    ul { list-style: none; }
+
+    /* ---------- Layout ---------- */
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
     }
 
-    a {
-      text-decoration: none;
+    /* Scroll Reveal Animation: Items start hidden */
+    section { 
+      margin-bottom: 80px; 
+      opacity: 0; 
+      transform: translateY(30px);
+      transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+    }
+
+    /* Visible state for animation */
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h2 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: inline-block;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+    
+    h2::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 4px;
+      background: var(--primary);
+      margin-top: 8px;
+      border-radius: 2px;
+    }
+
+    /* ---------- Hero Section ---------- */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-top: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    .hero h3 {
+      font-size: 20px;
       color: var(--primary);
       font-weight: 500;
     }
 
-    /* ---------- Layout ---------- */
-    .container {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
+    .hero p {
+      color: var(--text-muted);
+      font-size: 18px;
+      max-width: 600px;
     }
-
-    section { margin-bottom: 60px; }
-
-    h2 {
-      font-size: 26px;
-      margin-bottom: 20px;
-      border-left: 4px solid var(--primary);
-      padding-left: 12px;
-    }
-
-    /* ---------- Header ---------- */
-    .hero {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .hero h1 { font-size: 42px; }
-    .hero h3 { color: var(--gray); font-weight: 500; }
-
-    body.dark .hero h3 { color: #cbd5e1; }
 
     .hero-buttons {
-      margin-top: 10px;
+      margin-top: 25px;
       display: flex;
       gap: 15px;
       flex-wrap: wrap;
     }
 
+    /* ---------- Buttons ---------- */
     .btn {
-      padding: 10px 16px;
-      border-radius: 6px;
-      border: 1px solid var(--primary);
-      background: var(--primary);
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.3s var(--ease);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
       color: white;
-      font-weight: 500;
+      border: none;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .btn.primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
     }
 
     .btn.outline {
       background: transparent;
+      color: var(--text-main);
+      border: 2px solid rgba(100, 116, 139, 0.3);
+    }
+
+    .btn.outline:hover {
+      border-color: var(--primary);
       color: var(--primary);
+      background: rgba(37, 99, 235, 0.05);
     }
 
-    /* ---------- Cards ---------- */
+    /* ---------- Glass Cards ---------- */
     .card {
-      background: var(--light-card);
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      transition: background 0.3s;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), border-color 0.3s;
     }
 
-    body.dark .card {
-      background: var(--dark-card);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary);
     }
 
     /* ---------- Skills ---------- */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
     }
 
-    .skill-box h4 { margin-bottom: 10px; color: var(--primary); }
-    .skill-box ul { padding-left: 18px; }
+    .skill-box h4 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: var(--primary);
+    }
 
-    /* ---------- Experience ---------- */
-    .job h4 { color: var(--primary); margin-bottom: 6px; }
-    .job span { color: var(--gray); font-size: 14px; }
-    .job ul { margin-top: 10px; padding-left: 18px; }
+    .skill-box ul li {
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+      color: var(--text-muted);
+    }
+
+    .skill-box ul li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ---------- Work Experience ---------- */
+    .job {
+      position: relative;
+      margin-bottom: 25px;
+    }
+    
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .job h4 { font-size: 20px; color: var(--text-main); }
+    .job .company { color: var(--primary); font-weight: 600; }
+    .job .date { 
+      font-size: 14px; 
+      padding: 4px 12px; 
+      background: rgba(100, 116, 139, 0.1); 
+      border-radius: 20px; 
+      color: var(--text-muted);
+    }
+
+    .job ul {
+      margin-top: 15px;
+    }
+
+    .job ul li {
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .job ul li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    /* ---------- Projects ---------- */
+    .project h4 { font-size: 20px; margin-bottom: 8px; }
+    .project span { 
+      font-size: 14px; 
+      color: var(--primary); 
+      font-weight: 500; 
+      display: block;
+      margin-bottom: 15px;
+    }
+    .project ul {
+      margin-top: 15px;
+    }
+    .project ul li {
+      margin-bottom: 8px;
+      color: var(--text-muted);
+      padding-left: 20px;
+      position: relative;
+    }
+    .project ul li::before {
+      content: '▹';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .project-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* ---------- Certifications ---------- */
+    .cert-list li { margin-bottom: 12px; }
+    .cert-list strong { color: var(--text-main); }
+    .cert-list a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      margin-top: 5px;
+    }
+    .cert-list a:hover { color: var(--primary); }
+
+    /* ---------- Dark Mode Toggle ---------- */
+    .toggle {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(128,128,128, 0.2);
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      z-index: 100;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .toggle:hover {
+      transform: rotate(15deg) scale(1.1);
+    }
 
     /* ---------- Footer ---------- */
     footer {
       text-align: center;
-      padding: 30px;
-      background: #eef2ff;
-      color: var(--gray);
+      padding: 40px;
+      border-top: 1px solid var(--card-border);
+      color: var(--text-muted);
       font-size: 14px;
-      transition: background 0.3s;
+      margin-top: 40px;
     }
 
-    body.dark footer {
-      background: #020617;
-    }
-
-    /* ---------- Toggle ---------- */
-    .toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 10px 14px;
-      border-radius: 20px;
-      border: none;
-      background: var(--primary);
-      color: white;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    @media (max-width: 600px) {
-      .hero h1 { font-size: 32px; }
+    @media (max-width: 768px) {
+      .hero-buttons { width: 100%; flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .job-header { flex-direction: column; gap: 5px; align-items: flex-start; }
     }
   </style>
 </head>
 
 <body>
 
-<button class="toggle" onclick="toggleTheme()">🌙 Dark</button>
+<button class="toggle" onclick="toggleTheme()" aria-label="Toggle Theme">🌙</button>
 
 <div class="container">
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Katamreddi Ajay Chakravarthi</h1>
+  <section class="hero visible"> 
     <h3>Java Backend Developer </h3>
-    <p>3+ Years Experience </p>
+    <h1>Katamreddi <br>Ajay Chakravarthi</h1>
+    <p>3+ Years Experience in Building Scalable Microservices</p>
 
     <div class="hero-buttons">
-      <a href="KatamreddiAjayChakravarthi_Java_Developer.pdf" class="btn" download>Download Resume</a>
-      <a href="https://github.com/AjayChakravarthi?tab=repositories" class="btn outline" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/katamreddi-ajay" class="btn outline" target="_blank">LinkedIn</a>
+      <a href="KatamreddiAjayChakravarthi_Java_Developer.pdf" class="btn primary" download>
+        Download Resume
+      </a>
+      <a href="https://github.com/AjayChakravarthi?tab=repositories" class="btn outline" target="_blank">
+        GitHub Profile
+      </a>
+      <a href="https://www.linkedin.com/in/katamreddi-ajay" class="btn outline" target="_blank">
+        LinkedIn
+      </a>
     </div>
   </section>
 
-  <!-- SUMMARY -->
   <section>
     <h2>Profile Summary</h2>
     <div class="card">
-      Experienced Java Backend Developer with 3 years of hands-on experience in building RESTful services and backend applications using Spring Boot. Skilled in developing scalable APIs, writing clean and maintainable business logic, and managing relational databases such as MySQL and PostgreSQL. Strong knowledge of Spring Core, Spring Data JPA, and Hibernate with experience in optimizing backend workflows and improving system performance.
+      Experienced Java Backend Developer with 3+ years of hands-on experience in designing and building RESTful services, microservices, and enterprise applications using Spring Boot ecosystem. Proficient in developing scalable APIs, writing clean and maintainable business logic, optimizing database queries, and managing relational databases such as MySQL and PostgreSQL. Strong expertise in Spring Core, Spring Data JPA, Hibernate, and Spring Security. Proven ability to optimize backend workflows, improve system performance, and deliver high-quality solutions. Currently seeking opportunities with HCL, Infosys, and government sector positions.
     </div>
   </section>
 
-  <!-- SKILLS -->
   <section>
     <h2>Technical Skills</h2>
     <div class="skills-grid">
       <div class="card skill-box">
-        <h4>Programming</h4>
-        <ul><li>Java, Core Java, Java 8</li><li>SQL, Python</li></ul>
+        <h4>Programming Languages</h4>
+        <ul>
+          <li>Java (Core & Advanced)</li>
+          <li>Java 8, Java 11, Java 17+</li>
+          <li>SQL, Python</li>
+          <li>Stream API, Functional Programming</li>
+        </ul>
       </div>
 
       <div class="card skill-box">
-        <h4>Frameworks</h4>
-        <ul><li>Spring Boot, Spring MVC</li><li>Spring Data JPA, Hibernate</li></ul>
+        <h4>Frameworks & Libraries</h4>
+        <ul>
+          <li>Spring Boot (2.x, 3.x)</li>
+          <li>Spring MVC, Spring Data JPA</li>
+          <li>Hibernate, Spring Security</li>
+          <li>RestTemplate, WebClient</li>
+        </ul>
+      </div>
+
+      <div class="card skill-box">
+        <h4>Databases & ORM</h4>
+        <ul>
+          <li>PostgreSQL, MySQL</li>
+          <li>MongoDB (NoSQL)</li>
+          <li>JPA, Hibernate ORM</li>
+          <li>Query Optimization</li>
+        </ul>
       </div>
 
       <div class="card skill-box">
         <h4>Cloud & DevOps</h4>
-        <ul><li>AWS (EC2, S3)</li><li>Docker, CI/CD</li></ul>
+        <ul>
+          <li>AWS (EC2, S3, RDS)</li>
+          <li>Docker, Docker Compose</li>
+          <li>CI/CD Pipelines</li>
+          <li>GCP (Google Cloud)</li>
+        </ul>
+      </div>
+
+      <div class="card skill-box">
+        <h4>Architecture & Design</h4>
+        <ul>
+          <li>Microservices Architecture</li>
+          <li>REST API Design</li>
+          <li>Design Patterns (Singleton, Factory, Strategy)</li>
+          <li>System Optimization</li>
+        </ul>
+      </div>
+
+      <div class="card skill-box">
+        <h4>Tools & Technologies</h4>
+        <ul>
+          <li>Git, GitHub, GitLab</li>
+          <li>Maven, Gradle</li>
+          <li>Postman, IntelliJ IDEA</li>
+          <li>JUnit, Mockito Testing</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
   <section>
     <h2>Work Experience</h2>
 
     <div class="card job">
-      <h4>Software Engineering Analyst – Accenture</h4>
-      <span>2022 – Present</span>
+      <div class="job-header">
+        <div>
+          <h4>Software Engineering Analyst</h4>
+          <span class="company">Accenture</span>
+        </div>
+        <span class="date">2022 – Present | 2+ Years</span>
+      </div>
       <ul>
-        <li>Developed and maintained RESTful APIs using Java and Spring Boot.</li>
-        <li>Implemented secure configuration management using AWS Secrets Manager.</li>
-        <li>Built file upload and download features using Amazon S3.</li>
-        <li>Resolved production issues through root cause analysis and debugging.</li>
+        <li>Developed and maintained 15+ RESTful APIs using Java and Spring Boot, serving 100K+ daily requests with 99.5% uptime.</li>
+        <li>Implemented secure configuration management and credential handling using AWS Secrets Manager and AWS Parameter Store.</li>
+        <li>Built comprehensive file upload/download features with virus scanning using Amazon S3 and implemented multi-part uploads for large files.</li>
+        <li>Resolved 50+ production issues through systematic root cause analysis, debugging, and performance optimization.</li>
+        <li>Optimized database queries using JPA query optimization and indexing, reducing query execution time by 40%.</li>
+        <li>Implemented Spring Security with JWT token-based authentication and authorization frameworks.</li>
+        <li>Collaborated with cross-functional teams including QA, DevOps, and frontend developers in Agile environment.</li>
+        <li>Mentored junior developers on Spring Boot best practices and code review standards.</li>
       </ul>
     </div>
-
-    <br/>
 
     <div class="card job">
-      <h4>Intern – Softech</h4>
+      <div class="job-header">
+        <div>
+          <h4>Java Developer Intern</h4>
+          <span class="company">Softech</span>
+        </div>
+        <span class="date">2021 – 2022 | 6 Months</span>
+      </div>
       <ul>
-        <li>Assisted in developing REST APIs and integrating them with React.js.</li>
-        <li>Collaborated with senior developers and QA teams.</li>
+        <li>Assisted in developing REST APIs and backend services using Spring Boot framework.</li>
+        <li>Integrated backend APIs with React.js frontend, ensuring seamless data flow and API contract adherence.</li>
+        <li>Collaborated with senior developers on code reviews and best practices implementation.</li>
+        <li>Worked with QA teams on testing strategies and bug resolution.</li>
+        <li>Learned and applied microservices architecture principles in real-world projects.</li>
       </ul>
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section>
     <h2>Projects</h2>
+
     <div class="card project">
       <h4>Mini Myntra Clone – E-Commerce Application</h4>
-      <p>Built a full-stack e-commerce platform with authentication, wishlist, cart and checkout.</p>
-      <a href="https://mini-pi.vercel.app/" target="_blank">Live Project</a>
+      <span>Full Stack Development</span>
+      <ul>
+        <li>Built a complete e-commerce platform with user authentication, product catalog, and shopping features.</li>
+        <li>Implemented JWT-based authentication with secure password hashing.</li>
+        <li>Developed wishlist, shopping cart, and checkout functionality with order management.</li>
+        <li>Created responsive UI with React.js and connected to Spring Boot backend APIs.</li>
+        <li>Integrated payment processing and order tracking features.</li>
+        <li><a href="https://mini-pi.vercel.app/" class="project-link" target="_blank">View Live Project →</a></li>
+      </ul>
+    </div>
+
+    <div class="card project" style="margin-top: 20px;">
+      <h4>Banking System – Microservices Backend</h4>
+      <span>Microservices Architecture</span>
+      <ul>
+        <li>Designed and developed microservices-based banking application with account, transaction, and loan modules.</li>
+        <li>Implemented inter-service communication using REST APIs and message queues.</li>
+        <li>Built authentication service with role-based access control (RBAC).</li>
+        <li>Deployed services using Docker and Docker Compose with proper database isolation.</li>
+      </ul>
+    </div>
+
+    <div class="card project" style="margin-top: 20px;">
+      <h4>Task Management API – RESTful Service</h4>
+      <span>Backend API Development</span>
+      <ul>
+        <li>Created production-ready REST API for task and project management with Spring Boot.</li>
+        <li>Implemented CRUD operations with proper validation and error handling.</li>
+        <li>Added pagination, filtering, and sorting capabilities for efficient data retrieval.</li>
+        <li>Wrote comprehensive unit and integration tests using JUnit and Mockito.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- CERTIFICATIONS -->
   <section>
     <h2>Certifications & Awards</h2>
     <div class="card">
-      <ul>
+      <ul class="cert-list">
         <li>
+          <strong>J.P. Morgan – Software Engineering Job Simulation</strong>
           <a href="https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_690ddead7b3b5bddc543bf5c_1763365430181_completion_certificate.pdf" target="_blank">
-            J.P. Morgan – Software Engineering Job Simulation
+            View Certificate →
           </a>
         </li>
         <li>
-          <a href="https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_690ddead7b3b5bddc543bf5c_1763365430181_completion_certificate.pdf" target="_blank">
-            Google Cloud Platform(GCP)Associate Cloud Engineer
+          <strong>Google Cloud Platform – Associate Cloud Engineer</strong>
+          <a href="https://www.credly.com/badges/2ae2e6f7-8376-47c7-a35d-f74f66574d5c/public_url" target="_blank">
+            View Certificate →
           </a>
+        </li>
+      
+        <li>
+          <strong>Spring Boot & Microservices Certification – Udemy</strong>
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- EDUCATION -->
   <section>
     <h2>Education</h2>
     <div class="card">
-      <strong>Bachelor of Technology (CSE)</strong><br/>
-      Bharath Institute of Higher Education and Research<br/>
-      2018 – 2022
+      <h4 style="font-size: 18px; margin-bottom: 5px;">Bachelor of Technology in Computer Science Engineering (CSE)</h4>
+      <div style="color: var(--primary); margin-bottom: 5px;">Bharath Institute of Higher Education and Research</div>
+      <div style="font-size: 14px; color: var(--text-muted);">2018 – 2022</div>
+      <div style="margin-top: 15px; font-size: 14px; color: var(--text-muted);">
+        <strong>Relevant Coursework:</strong> Data Structures, Algorithms, Database Management Systems, Operating Systems, Software Engineering, Web Development
+      </div>
     </div>
   </section>
 
 </div>
 
 <footer>
-  © 2026 Ajay · Java Backend Developer
+  © 2026 Katamreddi Ajay Chakravarthi · Java Backend Developer | 3+ Years Experience
 </footer>
 
 <script>
+  // --- Theme Toggle Logic ---
   const btn = document.querySelector('.toggle');
   const body = document.body;
 
-  // Apply saved theme on page load
+  // Check saved theme or system preference
   const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'dark') {
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
     body.classList.add('dark');
-    btn.textContent = '☀️ Light';
+    btn.textContent = '☀️';
   }
 
   function toggleTheme() {
     body.classList.toggle('dark');
-
-    if (body.classList.contains('dark')) {
-      localStorage.setItem('theme', 'dark');
-      btn.textContent = '☀️ Light';
-    } else {
-      localStorage.setItem('theme', 'light');
-      btn.textContent = '🌙 Dark';
-    }
+    const isDark = body.classList.contains('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    btn.textContent = isDark ? '☀️' : '🌙';
   }
-</script>
 
+  // --- Scroll Reveal Animation Logic ---
+  const observerOptions = {
+    threshold: 0.15, // Trigger when 15% of the element is visible
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target); // Only animate once
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('section').forEach(section => {
+    observer.observe(section);
+  });
+</script>
 
 </body>
 </html>
