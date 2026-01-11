@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Katamreddi Ajay Chakravarthi | Java Backend Developer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    :root {
+      --primary: #2563eb;
+      --light-bg: #f8fafc;
+      --dark-bg: #0f172a;
+      --light-card: #ffffff;
+      --dark-card: #1e293b;
+      --text-light: #e5e7eb;
+      --text-dark: #111827;
+      --gray: #64748b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.dark {
+      background: var(--dark-bg);
+      color: var(--text-light);
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* ---------- Layout ---------- */
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+
+    section { margin-bottom: 60px; }
+
+    h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+    }
+
+    /* ---------- Header ---------- */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .hero h1 { font-size: 42px; }
+    .hero h3 { color: var(--gray); font-weight: 500; }
+
+    body.dark .hero h3 { color: #cbd5e1; }
+
+    .hero-buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--primary);
+      background: var(--primary);
+      color: white;
+      font-weight: 500;
+    }
+
+    .btn.outline {
+      background: transparent;
+      color: var(--primary);
+    }
+
+    /* ---------- Cards ---------- */
+    .card {
+      background: var(--light-card);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: background 0.3s;
+    }
+
+    body.dark .card {
+      background: var(--dark-card);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    }
+
+    /* ---------- Skills ---------- */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-box h4 { margin-bottom: 10px; color: var(--primary); }
+    .skill-box ul { padding-left: 18px; }
+
+    /* ---------- Experience ---------- */
+    .job h4 { color: var(--primary); margin-bottom: 6px; }
+    .job span { color: var(--gray); font-size: 14px; }
+    .job ul { margin-top: 10px; padding-left: 18px; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #eef2ff;
+      color: var(--gray);
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    body.dark footer {
+      background: #020617;
+    }
+
+    /* ---------- Toggle ---------- */
+    .toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 14px;
+      border-radius: 20px;
+      border: none;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 32px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<button class="toggle" onclick="toggleTheme()">🌙 Dark</button>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Katamreddi Ajay Chakravarthi</h1>
+    <h3>Java Backend Developer </h3>
+    <p>3+ Years Experience </p>
+
+    <div class="hero-buttons">
+      <a href="KatamreddiAjayChakravarthi_Java_Developer.pdf" class="btn" download>Download Resume</a>
+      <a href="https://github.com/AjayChakravarthi?tab=repositories" class="btn outline" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/katamreddi-ajay" class="btn outline" target="_blank">LinkedIn</a>
+    </div>
+  </section>
+
+  <!-- SUMMARY -->
+  <section>
+    <h2>Profile Summary</h2>
+    <div class="card">
+      Experienced Java Backend Developer with 3 years of hands-on experience in building RESTful services and backend applications using Spring Boot. Skilled in developing scalable APIs, writing clean and maintainable business logic, and managing relational databases such as MySQL and PostgreSQL. Strong knowledge of Spring Core, Spring Data JPA, and Hibernate with experience in optimizing backend workflows and improving system performance.
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section>
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+      <div class="card skill-box">
+        <h4>Programming</h4>
+        <ul><li>Java, Core Java, Java 8</li><li>SQL, Python</li></ul>
+      </div>
+
+      <div class="card skill-box">
+        <h4>Frameworks</h4>
+        <ul><li>Spring Boot, Spring MVC</li><li>Spring Data JPA, Hibernate</li></ul>
+      </div>
+
+      <div class="card skill-box">
+        <h4>Cloud & DevOps</h4>
+        <ul><li>AWS (EC2, S3)</li><li>Docker, CI/CD</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section>
+    <h2>Work Experience</h2>
+
+    <div class="card job">
+      <h4>Software Engineering Analyst – Accenture</h4>
+      <span>2022 – Present</span>
+      <ul>
+        <li>Developed and maintained RESTful APIs using Java and Spring Boot.</li>
+        <li>Implemented secure configuration management using AWS Secrets Manager.</li>
+        <li>Built file upload and download features using Amazon S3.</li>
+        <li>Resolved production issues through root cause analysis and debugging.</li>
+      </ul>
+    </div>
+
+    <br/>
+
+    <div class="card job">
+      <h4>Intern – Softech</h4>
+      <ul>
+        <li>Assisted in developing REST APIs and integrating them with React.js.</li>
+        <li>Collaborated with senior developers and QA teams.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section>
+    <h2>Projects</h2>
+    <div class="card project">
+      <h4>Mini Myntra Clone – E-Commerce Application</h4>
+      <p>Built a full-stack e-commerce platform with authentication, wishlist, cart and checkout.</p>
+      <a href="https://mini-pi.vercel.app/" target="_blank">Live Project</a>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section>
+    <h2>Certifications & Awards</h2>
+    <div class="card">
+      <ul>
+        <li>
+          <a href="https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_690ddead7b3b5bddc543bf5c_1763365430181_completion_certificate.pdf" target="_blank">
+            J.P. Morgan – Software Engineering Job Simulation
+          </a>
+        </li>
+        <li>
+          <a href="https://www.theforage.com/completion-certificates/Sj7temL583QAYpHXD/E6McHJDKsQYh79moz_Sj7temL583QAYpHXD_690ddead7b3b5bddc543bf5c_1763365430181_completion_certificate.pdf" target="_blank">
+            Google Cloud Platform(GCP)Associate Cloud Engineer
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section>
+    <h2>Education</h2>
+    <div class="card">
+      <strong>Bachelor of Technology (CSE)</strong><br/>
+      Bharath Institute of Higher Education and Research<br/>
+      2018 – 2022
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  © 2026 Ajay · Java Backend Developer
+</footer>
+
+<script>
+  const btn = document.querySelector('.toggle');
+  const body = document.body;
+
+  // Apply saved theme on page load
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    body.classList.add('dark');
+    btn.textContent = '☀️ Light';
+  }
+
+  function toggleTheme() {
+    body.classList.toggle('dark');
+
+    if (body.classList.contains('dark')) {
+      localStorage.setItem('theme', 'dark');
+      btn.textContent = '☀️ Light';
+    } else {
+      localStorage.setItem('theme', 'light');
+      btn.textContent = '🌙 Dark';
+    }
+  }
+</script>
+
+
+</body>
+</html>
