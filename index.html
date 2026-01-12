@@ -609,13 +609,20 @@
   const body = document.body;
 
   // Check saved theme or system preference
-  const savedTheme = localStorage.getItem('theme');
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+// --- Force Dark Mode by Default ---
+const savedTheme = localStorage.getItem('theme');
 
-  if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
-    body.classList.add('dark');
-    btn.textContent = '☀️';
-  }
+// If user explicitly chose light before, respect it
+if (savedTheme === 'light') {
+  body.classList.remove('dark');
+  btn.textContent = '🌙';
+} else {
+  // Default behavior → DARK MODE
+  body.classList.add('dark');
+  btn.textContent = '☀️';
+  localStorage.setItem('theme', 'dark');
+}
+
 
   function toggleTheme() {
     body.classList.toggle('dark');
