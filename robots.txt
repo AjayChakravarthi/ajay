@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ajaychakravarthi.github.io/ajay/sitemap.xml
